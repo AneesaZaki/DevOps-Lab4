@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "dgSpecHash": "5kmheyVaelqtxUKsQY9wUg4ZoegCTEscZ4X+UGHRTDGKzMjjRCY+DTU/de67+C9rlSg6xuqvvlKmc9APXnpstg==",
+  "success": true,
+  "projectFilePath": "C:\\Users\\marya\\source\\repos\\ClassLibraryProjects\\ShowCase\\ShowCase.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\marya\\.nuget\\packages\\stringlibrary\\1.0.0\\stringlibrary.1.0.0.nupkg.sha512"
+  ],
+  "logs": []
+}
