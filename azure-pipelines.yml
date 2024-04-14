@@ -1,0 +1,43 @@
+trigger:
+- main
+
+pool:
+  vmImage: 'windows-latest' # You can choose 'ubuntu-latest' if you prefer Ubuntu
+
+steps:
+- task: UseDotNet@2
+  inputs:
+    packageType: 'sdk'
+    version: '6.x'
+    installationPath: $(Agent.ToolsDirectory)/dotnet
+
+- script: dotnet restore ClassLibraryProjects.sln  # Updated solution file name
+  displayName: 'Restore NuGet packages'
+
+- script: dotnet build ClassLibraryProjects.sln --configuration Release  # Updated solution file name
+  displayName: 'Build solution'
+
+- task: DotNetCoreCLI@2
+  displayName: 'Pack class library'
+  inputs:
+    command: 'pack'
+    packagesToPack: 'ClassLibraryProjects/StringLibrary/StringLibrary.csproj'
+    configuration: 'Release'
+    outputDir: '$(Build.ArtifactStagingDirectory)'
+
+- task: NuGetCommand@2
+  displayName: 'Push NuGet package to Azure Artifacts'
+  inputs:
+    command: 'push'
+    packagesToPush: '$(Build.ArtifactStagingDirectory)/*.nupkg'
+    nuGetFeedType: 'internal'
+    publishFeedCredentials: 'lab4'
+
+- script: git add azure-pipelines.yml
+  displayName: 'Stage changes'
+
+- script: git commit -m "Add CI pipeline YAML file"
+  displayName: 'Commit changes'
+
+- script: git push origin main
+  displayName: 'Push changes to GitHub'
