@@ -11,10 +11,10 @@ steps:
     version: '6.x'
     installationPath: $(Agent.ToolsDirectory)/dotnet
 
-- script: dotnet restore ClassLibraryProjects.sln  # Updated solution file name
+- script: dotnet restore ClassLibraryProjects.sln
   displayName: 'Restore NuGet packages'
 
-- script: dotnet build ClassLibraryProjects.sln --configuration Release  # Updated solution file name
+- script: dotnet build ClassLibraryProjects.sln --configuration Release
   displayName: 'Build solution'
 
 - task: DotNetCoreCLI@2
@@ -24,6 +24,9 @@ steps:
     packagesToPack: 'ClassLibraryProjects/StringLibrary/StringLibrary.csproj'
     configuration: 'Release'
     outputDir: '$(Build.ArtifactStagingDirectory)'
+
+- script: echo NuGet library is built  # Add a custom message
+  displayName: 'Show build message'
 
 - task: NuGetCommand@2
   displayName: 'Push NuGet package to Azure Artifacts'
