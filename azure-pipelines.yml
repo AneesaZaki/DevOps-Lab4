@@ -21,11 +21,11 @@ steps:
   displayName: 'Pack class library'
   inputs:
     command: 'pack'
-    packagesToPack: 'ClassLibraryProjects/StringLibrary/StringLibrary.csproj'
-    configuration: 'Release'
+    packagesToPack: '**/*.csproj'
     outputDir: '$(Build.ArtifactStagingDirectory)'
 
-- script: echo NuGet library is built  # Add a custom message
+
+- script: echo NuGet library is built 
   displayName: 'Show build message'
 
 - task: NuGetCommand@2
